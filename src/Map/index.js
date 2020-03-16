@@ -15,7 +15,8 @@ export default class LeafletMap extends React.Component {
     super(props)
     this.mapRef = React.createRef()
     this.state = {
-      location: { lat: 29.65, lon: -82.32 }
+      location: { lat: 29.65, lon: -82.32 },
+      radar: false
     }
   }
 
@@ -23,6 +24,12 @@ export default class LeafletMap extends React.Component {
     const { lat, lng: lon} = event.latlng
     this.setState({ 
       location: {lat, lon} 
+    })
+  }
+
+  radar = () => {
+    this.setState({
+      radar: !this.state.radar
     })
   }
 
@@ -58,8 +65,9 @@ export default class LeafletMap extends React.Component {
           url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
           />
         </Map>
+        <div>{!this.state.radar ? 'False': 'True'}</div>
         <InfoCard location={this.state.location} />
-        <LayerToggle />
+        <LayerToggle radarLayer={this.radar} />
       </div>
     )
   }
